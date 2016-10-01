@@ -1,5 +1,5 @@
 #Controls the computer
-import pyautogui 
+import pyautogui
 import subprocess
 from mouth import speak
 
@@ -8,12 +8,12 @@ actions = ['louder', 'quieter']
 def volumeup():
     proc = subprocess.Popen('/usr/bin/amixer sset Master 10%+', shell=True, stdout=subprocess.PIPE)
     proc.wait()
-    speak('Turned volume up')
+    #speak('Turned volume up')
 
 def volumedown():
     proc = subprocess.Popen('/usr/bin/amixer sset Master 10%-', shell=True, stdout=subprocess.PIPE)
     proc.wait()
-    speak('Turned volume down')
+    #speak('Turned volume down')
 
 def do_action(command):
     #commands to control the volume
