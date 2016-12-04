@@ -1,0 +1,4 @@
+pyaudio
+audioop
+pyttsx
+speech_recognition
