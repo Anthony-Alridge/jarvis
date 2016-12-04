@@ -1,23 +1,22 @@
 import speech_recognition as sr
 import pyaudio
 import audioop
-from brain import parse_command
-from mouth import speak
+#from mouth import speak
 import time
 import sys
 
 class SpeechListener():
     #doesnt work well yet
-    def __init__(self):
+    def __init__(self, brain):
         self.rec = sr.Recognizer()
         self.mic = sr.Microphone()
-        
+        self.jarvis = brain
 
     def handle_sound(self, recog, sound):
         try:
             command = recog.recognize_google(sound)
             print('Received ' + command)
-            parse_command(command)
+            self.jarvis.parse_command(command, None, False)
 
         except sr.UnknownValueError:
             print("Could not understand audio, try again")
@@ -36,7 +35,7 @@ class SpeechListener():
 
 class ClapDetector():
     #TODO:Could I eventually use a nerual network/other magic to auto adjust the settings to good levels
-    def __init__(self):
+    def __init__(self, brain):
         self.quietcount = 0
         self.block_counter = 0
         self.clap_counter = 0
@@ -45,11 +44,11 @@ class ClapDetector():
         self.block_time = 0.05
         self.clap_length = 0.15/self.block_time
         self.pattern_limit = 3/self.block_time #number of blocks in 3 secs
-        self.patterns = {2:'louder', 3:'quieter'}
         self.block = int(self.rate*self.block_time)
         self.pa = pyaudio.PyAudio()
         self.stream = self.start_stream()
         self.background_level = self.listen_to_background()
+        self.jarvis = brain
 
 
 
@@ -83,8 +82,7 @@ class ClapDetector():
 
     def detect_pattern(self):
         #do some action if a certain number of claps are detected in a period of time
-        if self.clap_counter in self.patterns.keys():
-            parse_command(self.patterns[self.clap_counter])
+            self.jarvis.parse_command(None, self.clap_counter, True)
 
     def listen(self):
         try:
@@ -121,14 +119,3 @@ class ClapDetector():
             self.detect_pattern()
             self.clap_counter = 0
             self.block_counter = 0
-
-
-cl = ClapDetector()
-print('Ready')
-
-while True:
-    try:
-        cl.listen()
-    except KeyboardInterrupt:
-        cl.stop()
-        sys.exit()
