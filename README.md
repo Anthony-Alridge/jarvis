@@ -3,11 +3,14 @@ A simple tool which allows the user to create commands to control their computer
 
 Example usage:
  ```python
- jarvis = Brain()
+ import brain
+ import ears
+ 
+ jarvis = brain.Brain()
  jarvis.create_command(volumeup, "louder", 1)
- #Will turn volume up if user says louder or claps once.
- cl = ClapListener(jarvis)
- sl = SpeechListener(jarvis)
+ #Will turn volume up if user says louder or claps once, for some volumeup function defined by user.
+ cl = ears.ClapListener(jarvis)
+ sl = ears.SpeechListener(jarvis)
 #pass in jarvis so that our listens can access the commands.
 while True:
     try:
