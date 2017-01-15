@@ -1,9 +1,9 @@
 import brain
 import ears
-from standard import system
+from standard import browser
 
 jarvis = brain.Brain()
-jarvis.add(system)
+jarvis.add(browser)
 
 
 cl = ears.ClapDetector()
