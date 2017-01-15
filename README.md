@@ -28,4 +28,4 @@ while True:
   
  ```
 
-The above will supply some commands sucj as "volume up" to turn laptops volume up.
+The above will supply some commands such as "volume up" to turn laptops volume up.
