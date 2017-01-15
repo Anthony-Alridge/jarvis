@@ -1,3 +1,10 @@
-pyaudio
-pyttsx
-SpeechRecognition
+olefile==0.44
+Pillow==4.0.0
+PyAudio==0.2.9
+PyAutoGUI==0.9.33
+PyMsgBox==1.0.3
+PyScreeze==0.1.8
+python3-xlib==0.15
+pyttsx==1.1
+PyTweening==1.0.3
+SpeechRecognition==3.6.0

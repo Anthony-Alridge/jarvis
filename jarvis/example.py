@@ -1,28 +1,22 @@
 import brain
 import ears
-
-def volumeup():
-    proc = subprocess.Popen('/usr/bin/amixer sset Master 10%+', shell=True, stdout=subprocess.PIPE)
-    proc.wait()
-    #speak('Turned volume up')
-
-def volumedown():
-    proc = subprocess.Popen('/usr/bin/amixer sset Master 10%-', shell=True, stdout=subprocess.PIPE)
-    proc.wait()
-    #speak('Turned volume down')
+from standard import system
 
 jarvis = brain.Brain()
-jarvis.create_command(volumeup, 'louder', 2)
-jarvis.create_command(volumedown, 'quieter', 3)
+jarvis.add(system)
 
-cl = ears.ClapDetector(jarvis)
-sl = ears.SpeechListener(jarvis)
+
+cl = ears.ClapDetector()
+sl = ears.SpeechListener()
+
+manager = ears.InterfaceManager([cl, sl], jarvis)
+
+
+manager.run()
 
 while True:
     try:
-        cl.listen()
-        sl.listen()
+       manager.process_commands()
     except KeyboardInterrupt:
-        cl.stop()
-        sl.stop()
+        manager.stop()
         sys.exit()
